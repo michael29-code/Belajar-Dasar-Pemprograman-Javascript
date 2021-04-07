@@ -1,0 +1,340 @@
+
+console.log("Hello, World!");
+
+JavaScript membagi instruksi secara umum menjadi dua jenis, yaitu expression dan statement.
+
+Expression adalah unit kode yang dapat dievaluasi menjadi suatu nilai.
+contohnya 
+
+5; // Baris kode ini merupakan expression karena interpreter akan membaca kode ini dan menghasilkan nilai 5.
+2 + 3; // Baris kode ini juga merupakan expression. Interpreter mengevaluasi kode dan juga akan menghasilkan nilai 5.
+
+statement adalah instruksi untuk melakukan sebuah aksi tertentu. 
+Aksi ini bisa termasuk membuat variabel, melakukan perulangan, pengecekan kondisi, dll.
+
+contohnya :
+
+var yourName;
+let yourAge;
+const numberOfDays;  // declaration statement
+
+
+COMMENT
+
+Cara membuat comment ada 2 macam yaitu dengan menggunakan "//" dan
+
+// Ini merupakan komentar satu baris
+
+/* Ini merupakan komentar dengan lebih dari satu baris */
+
+VARIABEL
+
+Var, Let , const
+
+Aturan pemberian nama variabel
+
+Harus dimulai dengan huruf atau underscore (_).
+Dapat terdiri dari huruf, angka, dan underscore (_) dengan berbagai kombinasi.
+Tidak boleh mengandung spasi (whitespace). Jika penamaan variabel lebih dari dua kata, tuliskan secara camelCase. Contoh firstName, lastName, catName, dll.
+Tidak boleh mengandung karakter spesial (! . , / \ + * = dll.)
+
+Var sudah tidak lagi disarankan
+https://softwareengineering.stackexchange.com/questions/274342/is-there-any-reason-to-use-the-var-keyword-in-es6
+
+let myName;
+
+Kode untuk mendeklarasikan variabel seperti di atas dikenal sebagai declaration statement.
+
+
+kita bisa mengisi nilai variabel menggunakan tanda sama dengan (=).
+
+let yourName;
+yourName = "Michael";
+
+console.log(yourName);
+
+/* output
+Michael
+*/
+
+kita juga bisa langsung menginisialisasi nilai variabel setelah mendeklarasikannya
+
+let name = "michael";
+
+console.log(name);
+
+/* output
+michael
+*/
+
+
+let fullName = let lastName; // Error karena let lastName adalah sebuah statement untuk deklarasi variabel. Statement tidak bisa berada di posisi expression.
+let fullName = (lastName = Michael); // (lastName = Michael) merupakan expression, sehingga kode ini tidak error.
+let fullName = “Alfonsus” + “Michael”;
+
+
+Const merupakan kependekan dari constant artinya variabel yang tidak bisa diubah setelah diinisialisasi nilainya. 
+
+const z = 100;
+console.log(z);
+z = 200;
+console.log(z)
+
+/* TypeError: Assignment to constant variable. */
+
+
+
+TIPE Data
+
+1. Undifined
+
+Tipe data ini terbentuk ketika sebuah variabel tidak memiliki nilai. Artinya, ketika kita mendeklarasikan variabel tanpa menginisialisasikan nilainya, variabel tersebut menjadi undefined. Contoh:
+
+let x;
+console.log(typeof(x));
+
+/* output: undefined */
+
+
+Fungsi typeof() digunakan untuk memastikan tipe data pada variabel dengan mengembalikan tipe data tersebut dalam bentuk teks.
+
+2. Numbers 
+Tipe data yang berupa angka
+
+let x = 10;
+Kalau angka tersebut merupakan sebuah bilangan desimal, maka kita bisa gunakan tanda titik pada pecahan bilangannya.
+
+let y = 17.25;
+
+Perhitungan Aritmatika
+
+let a = 12;
+let b = 9;
+
+console.log(a + b)
+console.log(a - b)
+console.log(a * b)
+console.log(a / b)
+console.log(a % b)
+
+/* output:
+21
+3
+108
+1.3333333333333333
+3
+*/
+
+Pada operator aritmatika juga terdapat operator increment (++) dan decrement (--). Operator increment dan decrement digunakan untuk menambahkan atau mengurangi nilai 1 pada nilai variabel yang ada sekarang.
+
+Jika dituliskan setelah variabel (x++), expression akan menghasilkan nilai variabel sebelum ditingkatkan nilainya.
+Jika dituliskan sebelum variabel (++x), expression akan menghasilkan nilai variabel setelah ditingkatkan nilainya.
+
+/* Increment dan Decrement */
+
+let postfix = 5;
+console.log(postfix++);
+/* output: 5 */
+console.log(postfix);
+/* output: 6 */
+
+let prefix = 5;
+console.log(++prefix);
+/* output: 6 */
+
+BigInt
+
+tipe data “Number” hanya mencakup nilai dari -(253 - 1) hingga (253 - 1).
+Untuk nilai di luar Number, kita bisa menggunakan tipe BigInt. Untuk membedakan tipe BigInt dan Number, tambahkan karakter n di akhir angka
+
+const bigNumber = 1234567890123456789012345678901234567890n;
+const myInt = 1234567890123456789012345678901234567890;
+
+console.log(bigNumber);
+console.log(myInt);
+
+/* output
+1234567890123456789012345678901234567890n
+1.2345678901234568e+39
+*/
+
+BigInt juga dapat menyimpan  nilai kecil
+contohnya 
+
+const bigIntButSmall = 7n;
+
+///////////////////////////////
+
+console.log(5n + 2n);
+console.log(5n - 2n);
+console.log(5n * 2n);
+console.log(5n / 2n);
+console.log(5n % 2n);
+
+/* output
+7n
+3n
+10n
+2n; Bukan 2.5n
+1n
+*/
+
+STRING 
+merupakan sebuah teks.  Untuk menetapkan nilai sebagai string pada variabel gunakan tanda petik satu (‘) atau petik dua (“) di antara teksnya.
+
+let greet = "Hello";
+console.log(typeof(greet))
+
+/* output: string */
+
+const question = '"What do you think of JavaScript?" I asked';
+Jika ingin menggunakan petik    
+const answer = '"I think it\'s awesome!" he answered confidently';
+
+String template
+
+const myName = "michael";
+console.log(`Hello, my name is ${myName}.`);
+
+/* output: Hello, my name is michael. */
+
+
+Boolean
+bernilai true atau false 
+
+let x = true;
+let y = false;
+
+console.log(typeof(x))
+console.log(typeof(y))
+
+/* output: 
+boolean
+boolean
+*/
+
+Kita juga bisa menggunakan operator komparasi seperti lebih dari (>) atau kurang dari (<). Contohnya:
+
+const a = 10;
+const b = 12;
+
+let isGreater = a > b;
+let isLess = a < b;
+
+console.log(isGreater);
+console.log(isLess);
+
+/* output:
+false
+true
+*/
+
+
+
+NULL
+
+let someLaterData = null;
+console.log(someLaterData);
+
+/* output:
+null
+*/
+
+
+SYMBOL
+tipe data baru yang dikenalkan pada ES6. Tipe data Symbol digunakan untuk menunjukkan identifier yang unik.
+
+const id = Symbol("id");
+
+console.log(id);
+
+/* output
+Symbol(id)
+*/
+
+
+
+Operator
+
+Assignment "="
+x = y;
+
+let x = 10;
+let y = 5;
+ 
+x += y; // artinya -> x = x + y;
+x -= y; // artinya -> x = x - y;
+x *= y; // artinya -> x = x * y;
+x /= y; // artinya -> x = x / y;
+x %= y; // artinya -> x = x % y;
+
+
+Comparison operator
+
+==	Membandingkan kedua nilai apakah sama. (tidak identik).
+!=	Membandingkan kedua nilai apakah tidak sama. (tidak identik).
+===	Membandingkan kedua nilai apakah identik.
+!==	Membandingkan kedua nilai apakah tidak identik.
+>	Membandingkan dua nilai apakah nilai pertama lebih dari nilai kedua.
+>=	Membandingkan dua nilai apakah nilai pertama lebih atau sama dengan nilai kedua.
+<	Membandingkan dua nilai apakah nilai pertama kurang dari nilai kedua.
+<=	Membandingkan dua nilai apakah nilai pertama kurang atau sama dengan nilai kedua.
+
+
+let a = 10;
+let b = 12;
+
+console.log(a < b);
+console.log(a > b);
+
+/* output
+true
+false
+*/
+
+
+Perbedaan == dan ====
+        sama dan identik
+
+const aString = '10';
+const aNumber = 10
+
+console.log(aString == aNumber) // true, karena nilainya sama-sama 10
+console.log(aString === aNumber) // false, karena walaupun nilainya sama, tetapi tipe datanya berbeda
+
+/* output
+true
+false
+*/
+
+
+Logical Operator
+
+&&	Operator dan (and). Logika akan menghasilkan nilai true apabila semua kondisi terpenuhi (bernilai true).
+||	Operator atau (or). Logika akan menghasilkan nilai true apabila ada salah satu kondisi terpenuhi (bernilai true).
+! Operator tidak (not). Digunakan untuk membalikkan suatu kondisi.
+
+
+let a = 10;
+let b = 12;
+
+/* AND operator */
+console.log(a < 15 && b > 10); // (true && true) -> true
+console.log(a > 15 && b > 10); // (false && true) -> false
+
+/* OR operator */
+console.log(a < 15 || b > 10); // (true || true) -> true
+console.log(a > 15 || b > 10); // (false || true) -> true
+
+/* NOT operator */
+console.log(!(a < 15)); // !(true) -> false
+console.log(!(a < 15 && b > 10)); // !(true && true) -> !(true) -> false
+
+/* output
+true
+false
+true
+true
+false
+false
+*/
