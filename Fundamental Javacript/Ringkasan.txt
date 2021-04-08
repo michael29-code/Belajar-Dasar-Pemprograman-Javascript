@@ -338,3 +338,168 @@ true
 false
 false
 */
+
+IF / Else Statement
+Perkondisian
+if
+if, else
+if, else if ,else if
+Contoh
+
+const isRaining = true;
+
+console.log("Persiapan sebelum berangkat kegiatan.");
+if (isRaining) {
+    console.log("Hari ini hujan. Bawa payung.");
+}
+console.log("Berangkat kegiatan.");
+
+/* output:
+Persiapan sebelum berangkat kegiatan.
+Hari ini hujan. Bawa payung.
+Berangkat kegiatan.
+ */
+
+ menambah pengkondisian menggunakan if Else
+
+let x = 50;
+
+if(x > 70) {
+    console.log(x);
+} else {
+    console.log("Nilai kurang dari 70");
+}
+
+/* output
+Nilai kurang dari 70
+*/
+
+
+
+ternary operator atau conditional expressions
+
+// condition ? true expression : false expression
+
+const isMember = false;
+const discount = isMember ? 0.1 : 0;
+console.log(`Anda mendapatkan diskon sebesar ${discount * 100}%`)
+
+/* output
+Anda mendapatkan diskon sebesar 0%
+ */
+
+
+
+Switch Case Statement
+Contoh 
+switch (expression) {
+  case value1:
+    // do something
+    break;
+  case value2:
+    // do something
+    break;
+  ...
+  ...
+  default:
+    // do something else
+}
+
+contoh 
+
+let language = "French";
+let greeting = null;
+
+switch (language) {
+    case "English":
+        greeting = "Good Morning!";
+        break;
+    case "French":
+        greeting = "Bonjour!";
+        break;
+    case "Japanese":
+        greeting = "Ohayou Gozaimasu!";
+        break;
+    default:
+        greeting = "Selamat Pagi!";
+}
+
+console.log(greeting);
+
+/* output
+Bonjour!
+*/
+
+
+LOOP
+
+1. For Loop 
+
+for(inisialisasi variabel; test kondisi; perubahan nilai variabel) {
+    // do something
+}
+
+
+for(let i = 0; i < 5; i++) {
+    console.log(i);
+}
+
+/* output
+0
+1
+2
+3
+4
+*/
+
+2. For of loop
+ES 6
+for(arrayItem of myArray) {
+    // do something
+}
+
+contoh
+
+let myArray = ["Luke", "Han", "Chewbacca", "Leia"];
+
+for(const arrayItem of myArray) {
+    console.log(arrayItem)
+}
+
+/* output
+Luke
+Han
+Chewbacca
+Leia
+*/
+
+
+3. While and do While
+contoh1
+let i = 1;
+
+while (i <= 100) {
+    console.log(i);
+    i++;
+}
+contoh 2
+let i = 1;
+
+do {
+    console.log(i);
+    i++;
+} while (i <= 100);
+
+4. Infinite loops(hindari)
+
+
+
+link
+materi tambahan
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Grammar_and_Types
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Expressions_and_Operators
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Loops_and_iteration
