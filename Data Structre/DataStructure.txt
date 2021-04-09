@@ -249,3 +249,363 @@ console.log(allFavorites);
 
 
 Destructuring Object & Array
+
+Destructuring dalam JavaScript merupakan sintaksis yang dapat mengeluarkan nilai dari array atau properties dari sebuah object ke dalam satuan yang lebih kecil.
+
+Penulisan sintaksis destructuring object pada ES6 menggunakan object literal ({ }) di sisi kiri dari operator assignment.
+cth1
+const profile{
+    namaDepan: "Michael",
+    namaBelakang : "Jordan",
+    umur : 55
+}
+
+const{namaDepan, namaBelakang, umur} = profile
+
+console.log(namaDepan,namaBelakang,umur);
+/* output:
+Michael Jordan 55
+*/
+
+cth2
+// menginisialisasi nilai baru melalui object destruction
+({firstName, age} = profile);
+
+
+const profile{
+    namaDepan: "Michael",
+    namaBelakang : "Jordan",
+    umur : 55
+}
+
+let firstName = "Bambang";
+let age = 20;
+
+({namaDepan, umur} = profile);
+console.log(namaDepan);
+console.log(umur);
+
+/* output:
+Michael 
+55
+*/
+
+
+Jika kita tidak menggunakan tanda kurung maka error
+
+karena JavaScript mengira kita membuat block statement
+// block statement tidak bisa berada pada sisi kiri assignment
+{firstName, age} = profile;
+
+
+Jika kita mendestruksikan objek dan menetapkan variabel dengan nama yang bukan merupakan properti dari objek, maka nilai dari variabel tersebut menjadi undefined. 
+
+
+const profile{
+    namaDepan: "Michael",
+    namaBelakang : "Jordan",
+    umur : 55
+}
+
+const {namaDepan, namaBelakang, umur, laki} = profile;
+console.log(namaDepan);
+console.log(umur);
+console.log(laki);
+
+/* output:
+Michael 
+55
+undefined
+*/
+
+menambah nilai pada properti yg tidak adalah
+const {firstName, age, laki = false} = profile;
+
+
+kita bisa menggunakan penamaan variable lokal yg berbeda dengan properti objectnya dengan cara seperti berikut
+
+const {firstName: localFirstName, lastName: localLastName, age: localAge} = profile;
+cth kodingan
+const profile{
+    namaDepan: "Michael",
+    namaBelakang : "Jordan",
+    umur : 55
+}
+
+const {namaDepan: localFirstName, namaBelakang: localLastName, umur: localAge} = profile;
+console.log(localFirstName);
+console.log(localLastName);
+console.log(localAge);
+/* output:
+Michael 
+Jordan
+55
+*/
+
+Destructuring Array
+Destructuring array hampir sama dengan destructuring object. 
+Object menggunakan tanda kurung kurawal { } sedangkan array menggunakan tanda kurung siku [ ]. Perbedaan lainnya adalah destructuring array bekerja berdasarkan posisi daripada penamaan propertinya.
+
+const favorites = ["Indomie", "Burger", "Ketoprak", "hotdog"];
+ 
+const [firstFood, secondFood, thirdFood, fourthFood] = favorites;
+ 
+console.log(firstFood);
+console.log(secondFood);
+console.log(thirdFood);
+console.log(fourthFood);
+ 
+/* output:
+Indomie
+Burger
+Ketoprak
+hotdog
+*/
+
+Kita  bisa memilih nilai pada index tertentu untuk destrukturisasi pada array. 
+
+const favorites = ["Indomie", "Burger", "Ketoprak", "hotdog"];
+ 
+const [, , thirdFood] = favorites;
+ 
+console.log(thirdFood);
+ 
+/* output:
+Ketoprak
+*/
+
+
+Destructuring Assignment
+
+Kita  bisa melakukan destructuring assignment pada array. Namun, tidak seperti object, kita tidak perlu membungkusnya dengan tanda kurung.
+cth 
+
+const favorites = ["Indomie", "Burger", "Ketoprak", "hotdog"];
+
+let myFood = "Es krim";
+let herFood = "Sate";
+
+[myFood, herFood] = favorites;
+ 
+console.log(myFood);
+console.log(herFood);
+/* output:
+Indomie
+Burger
+*/
+
+contoh implementasi 
+let a = 1;
+let b= 2;
+ 
+console.log("Sebelum swap");
+console.log("Nilai a: " + a);
+console.log("Nilai b: " + b);
+ 
+[a, b] = [b, a]
+ 
+console.log("Setelah swap");
+console.log("Nilai a: " + a);
+console.log("Nilai b: " + b);
+ 
+/* output
+Sebelum swap
+Nilai a: 1
+Nilai b: 2
+Setelah swap
+Nilai a: 2
+Nilai b: 1
+*/
+
+
+Default Values = undefined
+const favorites = ["Seafood"];
+const [myFood, herFood] = favorites;
+ 
+console.log(myFood);
+console.log(herFood);
+ 
+/* output:
+Seafood
+undefined
+*/
+
+menambahkan Default values 
+
+const [myFood, herFood = "Salad"] = favorites;
+
+Map
+Map adalah tipe data yang menyimpan koleksi data dengan format key-value layaknya Object. Yang membedakan adalah Map memperbolehkan key dengan tipe data apa pun, dibandingkan Object yang hanya mengizinkan key bertipe String atau Symbol.
+
+
+
+Untuk mendefinisikan Map gunakan constructor seperti ini:
+
+const myMap = new Map();
+Jika ingin memberikan nilai dari Map secara langsung , dapat menggunakan array multi dimensi
+
+const myMap = new Map([
+    ['1', 'a String key'],
+    [1, 'a number key'],
+    [true, true]
+]);
+
+console.log(myMap);
+
+/* output
+Map(3) { '1' => 'a String key', 1 => 'a number key', true => true }
+*/
+
+Ketika sudah membuat objek Map, kita bisa mendapatkan nilainya berdasarkan key tertentu dengan metode get(). Lalu, untuk menambahkan pasangan key-value baru gunakan metode set().
+
+const capital = new Map([
+    ["Jakarta", "Indonesia"],
+    ["London", "England"],
+    ["Tokyo", "Japan"]
+]);
+
+console.log(capital.size);
+console.log(capital.get("London"));
+capital.set("New Delhi", "India");
+console.log(capital.size);
+console.log(capital.get("New Delhi"));
+
+/* output
+3
+England
+4
+India
+ */
+
+
+ Set
+ Set  merupakan kumpulan nilai (set of values). Hal yang membedakan Set dengan struktur data yang lain adalah data pada Set tidak berurutan dan juga tidak diindeks. Data di dalam Set juga bersifat unik dan tidak ada duplikasi.
+
+
+ const numberSet = new Set([1, 4, 6, 4, 1]);
+
+console.log(numberSet);
+
+/* output
+Set(3) { 1, 4, 6 }
+*/
+
+kenapa 4, 1 tidak ada pada output? karena set secara otomatis membuang angkaa yang sama 
+
+untuk menambahkan data bisa menggunakan fungsi add()
+
+const numberSet = new Set([1, 4, 6, 4, 1]);
+numberSet.add(5);
+numberSet.add(10);
+numberSet.add(6);
+
+console.log(numberSet);
+
+/* output
+Set(5) { 1, 4, 6, 5, 10 }
+*/
+
+
+add() hanya menerima satu argumen
+untuk menghapus data menggunakan delete() 
+argumen yang dimasukkan ke dalam fungsi delete adalah nilai yang ingin dihapus, bukan index-nya.
+
+
+const numberSet = new Set([1, 4, 6, 4, 1]);
+numberSet.add(5);
+numberSet.add(10);
+numberSet.add(6);
+
+numberSet.delete(4);
+
+console.log(numberSet);
+
+/* output
+Set(4) { 1, 6, 5, 10 }
+*/
+
+
+WeakMap dan WeakSet
+WeakMap merupakan varian dari Map yang mendukung garbage collection. Garbage collection adalah proses di mana interpreter JavaScript mengambil kembali memori yang tidak lagi “dapat dijangkau” dan tidak dapat digunakan oleh program. Garbage collection di JavaScript dilakukan secara otomatis dan bukan menjadi urusan dari developer.
+
+
+WeakMap adalah referensi terhadap nilai yang disimpan. Apabila suatu nilai yang disimpan di WeakMap sudah tidak terjangkau atau tidak bisa lagi diakses, maka referensi ke memorinya akan dihapus.
+
+hal yang membedakan antara Map dan WeakMap:
+
+Key dari WeakMap harus berupa object atau array. Nilai primitif tidak bisa digunakan sebagai key karena tidak mendukung garbage collection.
+
+WeakMap memiliki methodget(), set(), has(), dan delete(). Namun, WeakMap tidak termasuk kategori iterable sehingga tidak memiliki method keys(), values(), atau forEach().
+
+WeakMap juga tidak memiliki property size. Ini karena ukuran WeakMap dapat berubah karena proses garbage collection.
+
+Perbedaan
+cth 1
+let visitsCountMap = new Map(); // Menyimpan daftar user
+ 
+function countUser(user) {
+    let count = visitsCountMap.get(user) || 0;
+    visitsCountMap.set(user, count + 1);
+}
+ 
+let jonas = { name: "Jonas" };
+countUser(jonas);                // Menambahkan user "Jonas"
+ 
+jonas = null;                    // Data object "Jonas" dihapus
+ 
+console.log(visitsCountMap);
+ 
+/* output
+Map(1) { { name: 'Jonas' } => 1 }
+*/
+
+cth2
+
+let visitsCountMap = new WeakMap(); // Menyimpan daftar user
+
+function countUser(user) {
+    let count = visitsCountMap.get(user) || 0;
+    visitsCountMap.set(user, count + 1);
+}
+
+let jonas = { name: "Jonas" };
+countUser(jonas);                // Menambahkan user "Jonas"
+
+jonas = null;                    // Data object "Jonas" dihapus
+
+console.log(visitsCountMap);
+
+/* output
+WeakMap { <items unknown> }
+*/
+
+WeakSet adalah versi weak reference dari Set. Perbedaan antara WeakSet dan Set antara lain:
+
+WeakSet tidak bisa menyimpan nilai primitif.
+WeakSet bukan iterable dan hanya memiliki method add(), has(), dan delete().
+WeakSet tidak memiliki properti size.
+
+
+Kodingan 
+const restaurant = {
+	name : "Hokben",
+  	city : "Jakarta",
+  	"favorite drink" : "Sprite",
+  	"favorite food" : "Chiken rol",
+  	isVegan : false,
+}
+const {name : name, "favorite drink" : favoriteDrink} = restaurant;
+
+console.log(name);
+console.log(favoriteDrink);
+
+Jawaban quiz
+
+let evenNumber = [];
+	for (i = 1; i <= 100; i++){
+      if(i % 2 === 0){
+      	 evenNumber.push(i);
+      }
+    }
+
+console.log(evenNumber);
