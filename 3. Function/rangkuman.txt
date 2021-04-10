@@ -1,0 +1,311 @@
+Declaring Function
+
+function merupakan sebuah variabel yang berisi blok logika. Blok logika tersebut akan dieksekusi ketika variabelnya dipanggil.
+
+Parameter & Argument
+
+Parameter merupakan variabel yang didefinisikan sebagai inputan dari sebuah fungsi.
+
+function multiply(a, b) {
+    return a * b;
+}
+
+Argument merupakan nilai atau expression yang dimasukkan ke dalam fungsi.
+
+multiply(3, 4);
+
+Memanggil function
+
+memanggilnya dengan menuliskan nama fungsi diikuti tanda kurung dan memasukkan argumen di dalamnya (jika ada).
+
+function greeting() {
+    console.log("Good Morning!")
+}
+
+greeting();
+
+membuat fungsi untuk menerima, dan memanfaatkan parameter untuk mengubah perilaku dari fungsinya
+
+kita dapat menambahkan lebih dari satu parameter dengan memberikan tanda koma antar variabel parameternya. contohnya seperti name dan language dibawah
+
+function greeting(name, language) {
+    if(language === "English") {
+        console.log(`Good Morning ${name}!`);
+    } else if (language === "French") {
+        console.log(`Bonjour ${name}!`);
+    } else {
+        console.log(`Selamat Pagi ${name}!`);
+    }
+}
+// untuk memanggilnya dengan cara namafunction(parameter)
+greeting("Harry", "French");
+
+/* output
+Bonjour Harry!
+*/
+
+
+function dapat menghasilkan output atau mengembalikan sebuah nilai. 
+
+kita dapat membuat function yang berfungsi untuk melakukan perhitungan matematika dan hasilnya dapat kita masukkan ke dalam sebuah variabel. 
+contoh sederhana
+function multiply(a, b) {
+    return a * b;
+}
+
+let result = multiply(10, 2)
+console.log(result)
+
+/* output
+20
+*/
+
+contoh implementasi
+
+function greeting(name, language) {
+    if(language === "English") {
+        return `Good Morning ${name}!`
+    } else if (language === "French") {
+        return `Bonjour ${name}!`;
+    } else {
+        return `Selamat Pagi ${name}!`;
+    }
+}
+
+let greetingMessage = greeting("Harry", "French");
+console.log(greetingMessage);
+
+/* output
+Bonjour Harry!
+*/
+
+
+Expression Function
+
+const greeting = function(name, language) {
+    if(language === "English") {
+        return "Good Morning " + name + "!";
+    } else if (language === "French") {
+        return "Bonjour " + name + "!";
+    } else {
+        return "Selamat Pagi " + name + "!";
+    }
+}
+
+console.log(greeting('Ron', 'English'));
+
+/* output
+Good Morning Ron!
+ */
+
+
+ Arrow Function (es6)
+
+ menggunakan tanda panah atau fat arrow ( => ).
+
+ Regular function dapat berupa function declaration dan function expression. Namun, arrow function hanya berupa expression function saja. Itu sebabnya arrow function memiliki nama lengkap “arrow function expression”.
+
+ Perbedaan
+ Regular function
+ // function declaration
+function sayHello(greet) {
+    console.log(`${greet}!`);
+}
+ 
+// function expression
+const sayName = function (name) {
+    console.log(`Nama saya ${name}`)
+}
+
+arrow function
+// function expression
+const sayHello = (greet) => {
+    console.log(`${greet}!`)
+}
+ 
+const sayName = (name) => {
+    console.log(`Nama saya ${name}`)
+}
+
+
+
+kita tidak perlu menuliskan keyword function setiap membuat fungsi. Kita tetap menuliskan parameter di dalam tanda kurung lalu diikuti dengan tanda panah (=>) sebelum kurung kurawal.
+
+const sayName = (name) => {
+    console.log(`Nama saya ${name}`)
+}
+
+Jika fungsi hanya memiliki satu parameter, maka kita bisa menghapuskan tanda kurung seperti berikut:
+
+const sayName = name => {
+    console.log(`Nama saya ${name}`)
+}
+
+sayName("Leia");
+
+/* output
+Nama saya Leia
+ */
+
+
+jika kita sama sekali tidak membutuhkan parameter, maka kita tetap menuliskan tanda kurung namun kosong
+
+
+const sayHello = () => {
+    console.log("Selamat pagi semuanya!")
+};
+
+sayHello();
+
+/* output
+Selamat pagi semuanya!
+ */
+
+
+ ketika body dari function hanya terdiri dari satu baris, kita bisa menghapus tanda kurung kurawal. 
+ 
+const sayName = name => console.log(`Nama saya ${name}`);
+sayName("Leia");
+
+const sayHello = () => console.log("Selamat pagi semuanya!");
+sayHello();
+
+/* output
+Nama saya Leia
+Selamat pagi semuanya!
+ */
+
+ Ketika sebuah fungsi perlu mengembalikan nilai, kita tidak perlu lagi menuliskan return (hanya bekerja untuk fungsi satu baris).
+
+
+ const multiply = (a, b) => a * b;
+console.log(multiply(3, 4));
+
+/* output
+12
+ */
+
+ Variable Scope
+
+
+ Variabel yang dapat diakses dari seluruh script disebut dengan “globally scoped”, sementara variabel yang hanya diakses hanya pada fungsi tertentu disebut dengan “locally scoped”.
+
+
+ Variabel JavaScript menggunakan fungsi untuk mengelola cakupannya. Jika variabel didefinisikan di luar fungsi, maka variabel tersebut bersifat global. Jika variabel didefinisikan di dalam fungsi, maka variabel bersifat lokal dan cakupannya hanya pada fungsi tersebut beserta turunannya.
+
+ // global variable, dapat diakses pada parent() dan child()
+const a = 'a'; 
+ 
+function parent() {
+    // local variable, dapat diakses pada parent() dan child(), tetapi tidak dapat diakses di luar dari fungsi tersebut.
+    const b = 'b'; 
+    
+    function child() {
+        // local variable, dapat diakses hanya pada fungsi child().
+        const c = 'c';
+    }
+}
+
+
+jika kita lupa menuliskan keyword let, const, atau var pada script ketika membuat sebuah variabel, maka variabel tersebut akan menjadi global.
+
+
+
+Closure
+
+Suatu fungsi yang dapat mengakses variabel di dalam lexical scope-nya disebut dengan closure. Lexical scope berarti pada sebuah fungsi bersarang, fungsi yang berada di dalam memiliki akses ke variabel di lingkup induknya.
+
+
+function init() {
+    var name = 'Obi Wan';   // Variabel lokal di dalam scope fungsi init
+    
+    function greet() {      // Inner function, merupakan contoh closure
+        console.log(`Halo, ${name}`);   // Memanggil variabel yang dideklarasikan di parent function
+    }
+
+    greet();
+}
+
+init();
+
+/* output
+Halo, Obi Wan
+ */
+
+
+ Fungsi init() memiliki variabel lokal name dan fungsi greet(). Fungsi greet() adalah inner function yang didefinisikan di dalam init() dan hanya bisa diakses dari dalam fungsi init(). Perhatikan bahwa fungsi greet() tidak memiliki variabel lokal. Namun, karena inner function memiliki akses ke variabel di parent function-nya, sehingga greet() dapat mengakses variabel name. Itulah yang dimaksud dengan lexical scope.
+
+
+ implementasi
+ let counter = 0;
+
+let add = () => {
+    return ++counter;
+}
+
+console.log(add());
+console.log(add());
+counter = 23;
+console.log(add());
+
+/* output
+1
+2
+24
+ */
+
+Nilai counter akan bertambah ketika kita memanggil fungsi add(). Namun, kita juga bisa mengubah nilai counter secara langsung dengan assignment operator. tidak disarankan untuk program kompleks karena bisa memunculkan bug
+
+
+ Closure memungkinkan kita membuat fungsi dan variabel seolah menjadi private.
+
+
+ let add = () => {
+    let counter = 0;
+    return () => {
+        return ++counter;
+    };
+}
+
+let addCounter = add();
+
+console.log(addCounter());
+console.log(addCounter());
+console.log(addCounter());
+
+/* output
+1
+2
+3
+ */
+
+
+ quiz
+
+  const minimal = (a, b) => {
+            if (a !== b) {
+                return Math.min(a, b);
+            }
+            return a;
+        };
+        console.log(minimal(1, 4));
+        console.log(minimal(3, 2));
+        console.log(minimal(3, 3));
+
+        const power = (a, b) => {
+            return Math.pow(a, b);
+        };
+        console.log(power(7, 3));
+        console.log(power(3, 3));
+        console.log(power(4, 0.5));
+
+Function/fungsi adalah blok atau kumpulan kode yang memungkinkan untuk dipanggil berkali-kali.
+Penamaan fungsi harus mendeskripsikan fungsi dengan jelas. Penamaan yang bagus akan langsung memberi kita pemahaman tentang apa yang dilakukan atau dikembalikan.
+Function dapat menerima masukan nilai melalui parameter.
+Fungsi dapat mengembalikan nilai. Jika tidak, maka hasilnya adalah undefined.
+Karena fungsi berupa nilai, fungsi dapat ditetapkan atau dideklarasikan di setiap tempat kode, termasuk variabel atau parameter dari fungsi lain.
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures
