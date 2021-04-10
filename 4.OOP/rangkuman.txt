@@ -1,0 +1,336 @@
+OOP
+
+Object Oriented Programming
+
+Apa itu class?
+Empat pilar OOP.
+Penggunaan property & method.
+Object Composition.
+Contoh object/class bawaan dari JavaScript.
+
+
+OOP adalah pendekatan berbasiskan objek, di mana suatu objek terdiri dari kumpulan atribut dan method di dalamnya. Di dalam JavaScript, atribut adalah variable, yang digunakan untuk menyimpan nilai. Sementara method adalah fungsi, yang digunakan untuk menjalankan suatu proses.
+
+Object adalah instance dari sebuah class. Class sendiri dalam paradigma OOP secara teknis merupakan sebuah blueprint dalam mendefinisikan karakteristik dari sebuah objek.
+
+Penulisan kelas di JavaScript  bisa menggunakan sintaks class ataupun fungsi.
+
+// Cara 1
+class YourClassName{}
+class YourAnotherClassName{
+    constructor(property1, property2) {}
+}
+ 
+ 
+// Cara 2
+function YourClassName() {}
+function YourAnotherClassName(property1, property2) {}
+ 
+ 
+// pemanggilannya
+const nameOfObject = YourClassName();
+const nameOfObject2 = new YourAnotherClassName('value of property', 123);
+
+Blueprint untuk Mail, yang mana memiliki attribute from dan method sendMessage.
+contoh 
+
+// dengan menggunakan function 
+
+function Mail() {
+    this.from = 'pengirim@michael.com';
+    this.sendMessage = function(msg, to) {
+        console.log('you send:', msg, 'to', to, 'from', this.from);
+    };
+};
+ 
+const mail1 = new Mail();
+mail1.sendMessage('hallo', 'penerima@michael.com');
+ 
+/**
+output:
+you send: hallo to penerima@michael.com from pengirim@michael.com
+**/
+
+
+dengan menggunakan class
+
+class Mail{
+  from = 'pengirim@michael.com';
+    sendMessage = function(msg, to) {
+        console.log('you send:', msg, 'to', to, 'from', this.from);
+    };
+}
+ 
+const mail1 = new Mail();
+mail1.sendMessage('hallo', 'penerima@michael.com');
+ 
+/**
+output:
+you send: hallo to penerima@michael.com from pengirim@michael.com
+**/
+
+
+Property & Method
+
+Property
+
+Property adalah atribut dari sebuah objek, property sendiri dapat berupa tipe data primitive ,bisa juga berbentuk object dan fungsi. Misalkan isi pesan, list penerima, data pengirim, perintah kirim, dll.
+
+// cara 1
+class Mail{
+  from = 'pengirim@michael.com';
+    contacts = [];
+    sendMessage = function(msg, to) {
+        console.log('you send:', msg, 'to', to, 'from', this.from);
+    this.contacts.push(to); // menyimpan kontak baru
+    };
+}
+ 
+ 
+// cara 2
+function Mail() {
+    this.from = 'pengirim@michael.com';
+    this.contacts = [];
+    this.sendMessage = function(msg, to) {
+        console.log('you send:', msg, 'to', to, 'from', this.from);
+    this.contacts.push(to); // menyimpan kontak baru
+    };
+};
+
+this merupakan representasi field yang ditunjuk adalah field global dan dapat diakses dari method ataupun property di dalam kelas tersebut dengan menambahkan this di depannya. 
+
+contoh
+class Mail{
+  from = 'pengirim@michael.com';
+	contacts = [];
+	sendMessage = function(msg, to, from) {
+		console.log('you send:', msg, 'to', to, 'from', from); // from di sini merujuk ke `from` parameter, bukan ke `from` dari global value yaitu pengirim@michael.com
+    this.contacts.push(to);
+	};
+}
+
+const mail1 = new Mail();
+mail1.sendMessage('hallo', 'penerima@michael.com', 'aku@michael.com');
+
+/**
+you send: hallo to penerima@michael.com from aku@michael.com
+**/
+
+ketika ingin menginisialisasi ataupun mengakses sebuah attribute global dari sebuah kelas, maka harus menggunakan this.attributeName.
+
+
+Di OOP, properti dibagi menjadi 2:
+
+Internal interface : method dan property yang dapat diakses oleh method lain namun tidak bisa diambil/dijalankan di luar kelas tersebut.
+External interface : method dan property yang dapat diakses di luar kelas itu sendiri.
+
+di dalam JavaScript  terdapat 2 jenis akses identifier untuk sebuah field:
+
+Public : dapat diakses dari mana pun.
+Private : hanya dapat diakses dari dalam kelas itu sendiri.
+
+
+Secara default, semua atribut yang didefinisikan adalah public. Sehingga semua attribute tersebut dapat diakses oleh objek yang telah meng-instansiasi kelas tersebut.
+
+
+
+/** 
+cara 1, menggunakan var (hanya dapat digunakan pada penulisan kelas menggunakan statement `function`)
+**/
+var contacts = [];
+// contoh
+function Mail(){
+  this.from = 'pengirim@michael.com';
+    var contacts = [];
+    sendMessage = function(msg, to) {
+        console.log('you send:', msg, 'to', to, 'from', this.from);
+                      contacts.push(to);
+    };
+}
+ 
+ 
+/**
+cara 2, cara ini dapat digunakan pada penulisan kelas menggunakan statement `function` dan `class`
+**/
+_contacts = []
+// contoh
+class Mail{
+  from = 'pengirim@michael.com';
+    _contacts = [];
+    sendMessage = function(msg, to) {
+        console.log('you send:', msg, 'to', to, 'from', this.from);
+    this._contacts.push(to);
+    };
+}
+ 
+ 
+/** 
+cara 3, menambahkan prefix # , cara ini dapat digunakan pada penulisan kelas menggunakan statement `class` saja 
+  **/
+#contacts = [];
+// contoh
+class Mail{
+  from = 'pengirim@michael.com';
+    #contacts = [];
+    sendMessage = function(msg, to) {
+        console.log('you send:', msg, 'to', to, 'from', this.from);
+    this.#contacts.push(to);
+    };
+}
+
+Dari contoh di atas, jika kita ingin mengakses attribute contacts secara langsung melalui objek yang menginisiasi maka return-nya adalah undefined. Ketiga cara tersebut juga dapat digunakan pada sebuah method atau function.
+
+note :
+cara ke-2 bukanlah cara murni yang diusung JavaScript dalam menetapkan atribut private. Tetapi cara tersebut merupakan standarisasi penulisan yang biasanya digunakan oleh pengembang software (dengan JS) untuk membedakan variable-variable yang merupakan private variable.
+
+untuk cara 3, belum sepenuhnya didukung oleh JavaScript engine versi lama. ini merupakan proposal pengembangan JavaScript terkait dengan identifier pada js https://github.com/tc39/proposal-private-methods.
+
+
+Class Method
+
+
+Class Method adalah function atau method yang ada di dalam sebuah object. Untuk menggunakannya, sebuah class harus di-instantiate terlebih dahulu menjadi object baru bisa dijalankan.
+const mail1 = new Mail();
+mail1.sendMessage('hallo', 'penerima@michael.com');
+
+
+jika kita atidak menggunakan const mail1 = new Mail(); maka tidak berhasil
+
+Static Method
+
+Static method adalah function atau method yang sama seperti class method, akan tetapi untuk mengaksesnya tidak perlu meng-instantiate class, kita cukup menuliskan nama kelas dan nama method-nya secara langsung (NamaClass.namaMehod()).
+
+
+class Mail{
+  static isValidPhone(phone) {
+    return typeof phone === 'number';
+  }
+}
+ita dapat memanggil fungsi tersebut tanpa membuat instance kelas Mail
+
+Mail.isValidPhone(11111111111) //true
+
+
+Constructor
+Constructor adalah sebuah method/function yang dijalankan pertama kali ketika object dibuat. 
+
+membuat from sebagai sebuah value yang harus ditulis ketika sebuah objek di inisiasi. 
+
+// cara 1, jika kita menggunakan statement class
+class YourClassName{
+  constructor(params1, params2, ....) {
+    // do something here
+  };
+}
+ 
+ 
+// cara 2, jika kita menggunakan statemen function
+function Mail(params1, params2, ....) {
+    this.yourPropertyName = params1;
+  // do something here
+}
+
+contoh penerapan 
+// cara 1
+class Mail{
+  constructor(author) {
+    this.from = 'pengirim@michael.com';
+    
+    console.log('is instantiated', author);
+  };
+}
+ 
+// cara 2
+function Mail(author) {
+    this.from = author;
+  
+  console.log('is instantiated', author);
+}
+
+cara pemanggilannya
+
+const mail1 = new Mail("emailku@michael.com");
+
+Karena JavaScript bukan bahasa dengan dukungan static type maka sebenarnya kita bisa melakukan instansiasi dengan parameter sesuka kita:
+
+const mail1 = new Mail(085000111222); // misalkan untuk SMS
+const mail2 = new Mail("emailku@dicoding.com"); // misalkan untuk Email
+
+
+
+4 Pilar OOP
+
+Terdapat empat pilar dalam OOP, yaitu encapsulation, abstraction, inheritance, dan polymorphism.
+
+Encapsulation
+
+Enkapsulasi adalah kondisi di mana attribute atau method di dalam class dibungkus dan bersifat privat. Artinya objek lain tidak bisa mengakses atau mengubah nilai dari property secara langsung. 
+
+Pada contoh kasus Mail kita tidak bisa langsung mengubah daftar contact, namun kita bisa menambahkannya melalui fungsi saat kirim pesan atau mengambil data tersebut melalui method showAllContacts.
+
+class Mail{
+    _contacts = [];
+    constructor(author) {
+        this.from = author;
+    }
+    sendMessage = function(msg, to) {
+        console.log('you send:', msg, 'to', to, 'from', this.from);
+        this._contacts.push(to);
+    }
+    showAllContacts() {
+        return this._contacts;
+    }
+}
+
+Abstraction
+Abstraksi dapat dikatakan merupakan penerapan alami dari enkapsulasi. Abstraksi berarti sebuah objek hanya menunjukkan operasinya secara high-level.
+
+Inheritance
+
+Pewarisan
+untuk mewarisi kelas
+// cara 1: menggunakan keyword `extends` jika menggunakan statement `class`
+class ChildClassName extends ParentClassName{}
+ 
+ 
+// cara 2: menggunakan `prototype` jika menggunakan statement `function` / `class`
+ChildClassName.prototype = new ParentClassName()
+
+
+contoh penerapan pada saat ingin membuat childclass benarma whatsapp yg mewarisi kelas mail 
+
+class Mail{
+  _contacts = [];
+         constructor(author) {
+                     this.from = author;
+           };
+	sendMessage = function(msg, to) {
+		console.log('you send:', msg, 'to', to, 'from', this.from);
+                     this._contacts.push(to);
+	};
+	showAllContacts() {
+    return this._contacts;
+  }
+}
+
+class WhatsApp extends Mail{
+           username = 'michael';
+	isBussinessAccount = true;
+	
+	myProfile = function() {
+                   return `my name ${this.username}, is ${this.isBussinessAccount? 'Business': 'Personal'}`;
+            };
+}
+
+const wa1 = new WhatsApp(11111111);
+console.log(wa1.myProfile());
+// my name michael, is Business
+
+Kita bisa mengakses attribute maupun method dari parent class yang Accessible. Misalkan:
+
+wa1.sendMessage('halo', 55555555);
+
+
+Polymorphism / banyak bentuk 
+
+ Sederhananya objek dapat memiliki bentuk atau implementasi yang berbeda-beda pada satu metode yang sama. Semua jenis Mail dapat mengirim pesan, namun whatsapp, email, sms tentunya memiliki cara yang berbeda dalam mengirim pesan, misalkan: whatsapp dapat mengirim pesan suara sedangkan yang lainnya tidak, email dapat menyaring konten spam saat mengirim pesan sedangkan yang lain tidak. Perbedaan bentuk atau cara mengirim pesan tersebut merupakan contoh dari polymorphism.
