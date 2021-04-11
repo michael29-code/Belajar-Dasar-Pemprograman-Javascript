@@ -334,3 +334,275 @@ wa1.sendMessage('halo', 55555555);
 Polymorphism / banyak bentuk 
 
  Sederhananya objek dapat memiliki bentuk atau implementasi yang berbeda-beda pada satu metode yang sama. Semua jenis Mail dapat mengirim pesan, namun whatsapp, email, sms tentunya memiliki cara yang berbeda dalam mengirim pesan, misalkan: whatsapp dapat mengirim pesan suara sedangkan yang lainnya tidak, email dapat menyaring konten spam saat mengirim pesan sedangkan yang lain tidak. Perbedaan bentuk atau cara mengirim pesan tersebut merupakan contoh dari polymorphism.
+
+Overriding Method 
+
+Overriding adalah teknik untuk melakukan perombakan (baik total ataupun tidak) pada sebuah method ataupun constructor yang dimiliki oleh parent class sehingga dapat disesuaikan dengan behavior di child class.
+
+Overriding Constructor
+menggunakan operator super() untuk mengeksekusi method parent-nya.
+
+class WhatsApp extends Mail{
+    constructor(username, isBussinessAccount, phone) {
+        this.from=phone;
+    this.username = username;
+    this.isBussinessAccount = true;
+    }
+}
+ 
+const wa1 = new WhatsApp('michael', true, 11111111111);
+/** 
+Error:
+Must call super constructor in derived class before accessing 'this' or returning from derived constructor
+**/
+
+maka diubah constructornya pake super()
+
+constructor(username, isBussinessAccount, phone) {
+  super(phone);
+  this.username = username;
+  this.isBussinessAccount = true;
+}
+
+Overriding Method
+Pada dasarnya semua method yang ada pada kelas parent dapat diakses langsung di child kelasnya (as is).
+
+Kadang kita tidak menggunakan sebuah method seutuhnya sama seperti parent kelasnya. namun dapat menambahkan perintah tertentu ataupun menguranginya. 
+super.methodName();
+
+sendMessage = function(msg, to) {
+    super.sendMessage(msg, to);
+    console.log('Send by WA');
+}
+
+note
+super(...) digunakan untuk memanggil constructor parent, dan hanya dapat digunakan di constructor.
+
+super.methodName(...) digunakan untuk memanggil parent method.
+
+
+Object Composition
+
+Object composition adalah prinsip komposisi dari sebuah alur bisnis tanpa perlu melakukan pewarisan dari parent-nya. 
+
+Prinsip ini didasarkan di mana kita telah mendefinisikan kumpulan-kumpulan perilaku (method/function) sehingga ketika kita ingin membuat alur bisnis lain dengan beberapa perilaku (method) yang sama, kita dapat menggunakan yang sudah ada tanpa melakukan inheritance/pewarisan.
+
+Konsep yang harus dilkukan 
+1. Memisahkan fungsi-fungsi umum yang biasa digunakan
+
+ const yourGenericAction = params => ({
+   actionA: () => { /** do action A **/},
+   actionB: () => { /** do action B **/},  
+ });
+
+2. membuat class dan menyimpan attribut kedalam sebuah objek
+
+  const YourClassName = (paramA, paramB) => {
+    const self = {
+      paramsA,
+      paramsB
+    };
+  }
+3. menambahkan perlaku method/function yang ada pada kelas itu saja
+
+  const YourClassName = (paramA, paramB) => {
+  const self = {
+    paramsA,
+    paramsB
+  };
+  
+  const yourSpecificActions = self => ({
+    specificActinA: { /** do action A **/},
+  });
+}
+
+4. membuat atribute , generic method dan spesific method menjadi sabtu objek
+const YourClassName = (paramA, paramB) => {
+  const self = {
+    paramsA,
+    paramsB
+  };
+  
+  const yourSpecificActions = self => ({
+    specificActinA: { /** do action A **/},
+  });
+  
+  return Object.assign(self, yourGenericAction(self), yourSpecificActions(self))
+}
+
+
+
+// [1] list of abstractions
+const canSendMessage = self => ({
+    sendMessage: () => console.log('send message:', self.message)
+  });
+
+const checkIsValidPhone = self => ({
+    isValid: () => console.log('valid phone', self.from)
+  });
+
+// [2] crate object composition
+const personalEnterprise = (from, message, store) => {
+  // [3] attributes
+  const self = {
+    from,
+    message,
+    store
+  };
+  // [4] method
+  const personalEnterpriseBehaviors = self => ({
+    createCatalog: () => console.log('Catalog has created: ', self.store)
+  });
+  
+  // [5] create object composition
+  return Object.assign(self, personalEnterpriseBehaviors(self), canSendMessage(self), checkIsValidPhone(self));
+};
+
+const pe1 = personalEnterprise('pengirim@gmail.com', 'hei ada produk baru ', 'michael Store');
+pe1.createCatalog(); //Catalog has created:  michael Store
+pe1.sendMessage(); //send message: hei ada produk baru 
+
+
+
+Built-in Class
+
+  Date
+  Object
+  Array
+  Math
+  String 
+
+  digunakan untuk memanipulasi data-data terkait dengan array, perintah matematik, manipulasi karakter, dan manipulasi objek.
+
+  Date merupakan core object bawaan dari bahasa pemrograman JavaScript yang digunakan untuk utilitas terkait tanggal dan waktu.
+
+
+ Kita dapat me-instansiasi Date object tersebut dengan 4 cara:
+
+  // #1 tanpa parameter, yang berarti `myDate` akan berisi tanggal dan waktu saat ini
+  const myDate = new Date(); 
+  
+  // #2 parameter tanggal dalam bentuk string, misal  "January 01, 2021" 
+  const myDate = new Date(dateString); 
+  
+  // #3 parameter dalam bentuk number, misal 87400000
+  const myDate = new Date(miliseconds); 
+  
+  // #4 parameter tanggal dalam bentuk number (7 parameter), [hour,minute,second,millisecond] bersifat opsional
+  const myDate = new Date(year,month,date,hour,minute,second,millisecond); 
+
+  Dalam object Date terdapat beberapa method yang dapat kita gunakan.
+
+
+  getMonth()	
+  Nilai kembaliannya adalah bulan dalam bentuk angka (0 sampai 11), 0 berarti Januari.
+  contoh penggunaan	
+  myDate.getMonth()
+
+  getFullYear()	
+  Nilai kembaliannya adalah tahun, misalkan 2021.	
+  contoh penggunaan
+  myDate.getFullYear()
+
+  getDate()	
+  Nilai kembaliannya adalah tanggal dari 1 sampai 31.	
+  contoh penggunaan
+  myDate.getDate()
+
+  getHours()	
+  Nilai kembaliannya adalah jam dari 0 sampai 23	
+  contoh penggunaan
+  myDate.getHours()
+
+  getMinutes()	
+  Nilai kembaliannya adalah menit dari 0 sampai 59 Nilai kembaliannya	
+  contoh penggunaan
+  myDate.getMinutes()
+
+  getSeconds()	
+  Nilai kembaliannya adalah detik dari 0 sampai 59
+  contoh penggunaan
+  myDate.getSeconds()
+
+  getMilliseconds()	
+  Nilai kembaliannya adalah mili-detik dari 0 to 999
+  contoh penggunaan	
+  myDate.getMilliseconds()
+
+  getTime()	
+  Nilai kembaliannya adalah waktu dalam bentuk epoch mili-detik (dimulai dari 1 January, 1970 yang berarti 0)
+  contoh penggunaan
+  myDate.getTime()
+
+  getDay()	
+  Nilai kembaliannya adalah hari dalam seminggu dari 0 sampai 6. 0 berarti minggu	
+  contoh penggunaan
+  myDate.getDay()
+
+
+  terdapat static method yang dapat digunakan tanpa perlu melakukan instansiasi, yaitu:
+
+  parse(datestring)	
+  digunakan untuk merubah tanggal dalam format string, menjadi epoch miliseconds	
+  Contoh penggunaannya
+  Date.parse("2021-01-01")
+
+  UTC(year, [..params])	
+  digunakan untuk merubah tanggal dalam format string, menjadi epoch miliseconds	
+  Contoh penggunaannya
+  Date.UTC(2021, 01, 01)
+
+  Date String Format
+
+  YYYY	4 digit tahun, misalkan : 2021
+  MM  	2 digit bulan, misalkan : 01 berarti Januari
+  DD  	2 digit tanggal 0 sampai 31
+  HH  	2 digit jam 0 sampai 23
+  mm  	2 digit menit 0 sampai 59
+  ss  	2 detik detik 0 sampai 49
+  sss 	3 digit milidetik 0 sampai 999
+  -	    Pemisah untuk tanggal
+  :	    Pemisah untuk waktu
+  Z   	Berarti tanggal akan diatur sebagai UTC
+
+  Untuk Date Object javascript, nilai epoch dimulai dari 0 untuk tanggal 1 January, 1970, 00:00:00 UTC
+
+  Contoh Penggunaan Date
+
+  // parameter birthday dapat berupa miliseconds ataupun date string
+  const myAge = birthday => {
+    const birtday = new Date(birthday);
+    const today = Date.now(); // today menghasilkan nilai miliseconds saat ini
+    
+    const diff_ms = today - birtday.getTime(); // menghitung selisih nilai miliseconds hari ini dan tanggal lahir
+    const diffDate = new Date(diff_ms);
+    
+    return diffDate.getFullYear() - 1970; // 1970 adalah representasi 0 dari miliseconds
+  };
+
+  myAge('2000-01-22'); // 21 tahun
+
+
+contoh yang lain 
+
+  const listOfContent = [1,2,”President”, {}];
+  console.log(Array.isArray(listOfContent)); 
+  // result is true
+  
+  const splitText = "12:20:00".split(':');
+  // result is [ '12', '20', '00' ]
+
+
+  Rangkuman 
+  OOP merupakan paradigma yang berdasarkan pada konsep objek yang memiliki atribut serta dapat melakukan operasi atau prosedur tertentu.
+  Terdapat 4 (empat) pilar dalam object oriented programming, yaitu: 
+    encapsulation, 
+    abstraction, 
+    inheritance, 
+    dan polymorphism.
+  Class merupakan blueprint untuk mendefinisikan karakteristik dari sebuah objek.
+  Object composition memungkinkan penyusunan kumpulan perilaku/method untuk menghindari pewarisan dan hirarki yang kompleks.
+
+
+  https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object-oriented_JS
+  https://betterprogramming.pub/object-oriented-programming-in-javascript-b3bda28d3e81
