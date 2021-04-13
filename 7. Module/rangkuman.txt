@@ -1,0 +1,77 @@
+kita bisa menuliskan seluruh kode hanya dalam satu berkas.
+
+
+Ketika kita membagi kode JavaScript menjadi beberapa berkas, di situlah kita perlu membuat sebuah modul JavaScript. Tujuannya Tak lain adalah untuk menghubungkan berkas JavaScript yang terpisah agar dapat saling digunakan.
+
+Export & Import
+
+Modul bekerja dengan cara exporting dan importing nilai.
+
+module.exports untuk melakukan proses export module. Setiap berkas JavaScript yang berjalan pada Node, memiliki objek module lokal yang memiliki properti exports. Properti tersebut digunakan untuk mendefinisikan nilai apa yang akan diekspor dari berkas tersebut.
+
+export
+module.exports
+
+module.exports = namamodule
+
+import / menggunakan
+require().
+
+
+kita bisa menggunakan method require() dengan memberikan parameter lokasi berkas. 
+
+
+Jika kita menggunakan lokasi yang relatif (dapat berubah/dipindahkan), pastikan awali dengan menuliskan ./. Contohnya, berkas index.js dan state.js berada pada folder yang sama, maka kita cukup menuliskannya dengan ./state.js.
+
+console.log(module); digunakan untuk melihat tree module
+Multiple export value in Node.js
+
+kita tetap mengekspor satu nilai, tetapi kita akan memanfaatkan object literals ({ }).
+lihat state.js
+kita gunakan teknik destructuring object untuk mendapatkan nilai yang di-import
+
+lihat index.js
+
+ketika menggunakan destructuring object pastikan penamaan variabel lokal sesuai dengan properti objeknya. Jika tidak, maka variabel tersebut akan menghasilkan undefined.
+
+
+
+ES6 Module
+lihat state.js
+
+export default dan import .. from "./state.js";
+
+variabelnya bebas untuk menyimpan nilai yg di import
+
+Saat ini, fitur ES6 module tidak secara default diaktifkan. Pesan eror akan  menyebutkan dua cara bagaimana mengaktifkan ES6 module. Dua cara tersebut adalah menambahkan properti pada package.json atau dengan mengubah ekstensi .js menjadi .mjs. Mari kita gunakan cara pertama yang lebih sederhana.
+
+"type": "module", 
+
+tambahkan code atas setelah main 
+
+Named export digunakan untuk mengekspor banyak nilai dalam berkas JavaScript. Cara kerjanya mirip seperti pada Node.js. Nilai yang akan diekspor dituliskan di dalam object literals
+
+export {coffeeStock, isCoffeeMachineReady};
+
+Lalu untuk mendapatkan nilai yang diekspor melalui named export, kita gunakan destructuring object.
+
+Karena named import menggunakan teknik destructuring object untuk mendapatkan nilai, maka pastikan penamaan variabel sesuai dengan nama variabel yang diekspor. Jika nama tidak sesuai, akan terjadi seperti berikut:
+/* output
+SyntaxError: The requested module './state.js' does not provide an export named 'stock'
+*/
+
+
+jika kita tetap ingin mengubah penamaan variabel dari named import, kita bisa melakukannya dengan menambahkan keyword as setelah penamaan variabelnya.
+import { coffeeStock as stock, isCoffeeMachineReady } from './state.js';
+
+
+jawaban tersebut
+// TODO: 1
+module.exports = Tiger;
+// TODO 2
+module.exports =  Wolf;
+// TODO 3
+const Tiger = require('./Tiger.js');
+const Wolf = require('./Wolf.js');
+// TODO 4
+module.exports = {fight,myTiger,myWolf,result};
