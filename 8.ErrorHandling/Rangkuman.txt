@@ -1,0 +1,136 @@
+Error Handling
+
+pencegahan error agar program dapat tetap berjalan dengan semestinya
+
+
+Try and Catch
+
+try {
+    // kode
+} catch (error) {
+    // error handling
+}
+
+
+Taruh kode yang berpeluang menimbulkan eror di dalam blok try. Apabila terjadi eror di dalam blok kode try, maka ia akan ditangkap dan ditangani oleh blok kode catch. Sementara, jika tidak terjadi eror pada kode, maka blok catch akan diabaikan.
+
+try {
+    console.log("Awal blok try");
+    console.log("Akhir blok try");
+} catch (error) {
+    console.log("Tidak terjadi eror, maka kode ini diabaikan");
+}
+ 
+/* output
+Awal blok try
+Akhir blok try
+*/
+
+tidak menghasilkan error maka catch diabaikan
+
+
+try {
+    console.log("Awal blok try");   // (1)
+    errorCode;                      // (2)
+    console.log("Akhir blok try");  // (3)
+} catch (error) {
+    console.log("Terjadi error!");  // (4)
+}
+ 
+/* output
+Awal blok try
+Terjadi error!
+*/
+
+catch memiliki satu parameter bernama error (nama variabel bisa diubah). Variabel error tersebut merupakan sebuah object yang menyimpan detail informasi dari error yang terjadi.
+
+
+Object error memiliki beberapa properti utama di dalamnya, yaitu:
+
+name : Nama error yang terjadi.
+message : Pesan tentang detail error.
+stack : Informasi urutan kejadian yang menyebabkan error. Umumnya digunakan untuk debugging karena terdapat informasi baris mana yang menyebabkan error.
+
+lihat index.js (1)
+
+maka akan menghasilkan 
+/* output
+Awal blok try
+ReferenceError
+errorCode is not defined
+ReferenceError: errorCode is not defined
+    at file:///home/dicoding/Playground/javascript/CoffeeMachine/error.js:3:5
+    at ModuleJob.run (internal/modules/esm/module_job.js:152:23)
+    at async Loader.import (internal/modules/esm/loader.js:166:24)
+    at async Object.loadESM (internal/process/esm_loader.js:68:5)
+*/
+Dari informasi di atas,  error yang muncul adalah ReferenceError karena errorCode dianggap sebagai sebuah variabel atau nilai yang tidak terdefinisi.
+
+
+try-catch-finally
+
+Blok finally akan tetap dijalankan tanpa peduli apa pun hasil yang terjadi pada blok try-catch.
+
+lihat index.js(2)
+
+Throwing Errors
+lihat index.js(3)
+
+fungsi JSON.parse akan melakukan parsing atau konversi dari variabel json (String) menjadi sebuah object. Skenario seperti di atas akan banyak kita temui ketika melakukan request ke API.
+
+jika penulisan json string tidak sesuai dengan format object maka 
+lihat index.js(4)
+
+outputnya akan seperti ini
+/* output
+SyntaxError
+Unexpected token b in JSON at position 2
+*/
+
+Jika json tidak sesuai format, maka JSON.parse akan menimbulkan eror. Eror tersebut akan ditangkap oleh blok catch dan kode di dalamnya yang akan dieksekusi.
+
+lihat index.js(5)
+
+kode diatas tidak menimbulkan error ttetapi tidak adanya properti name pada json sama aja dengan error karena dapat berdampak pada program
+
+kita bisa menggunakan throw untuk mengatasinya. Operator ini digunakan untuk melemparkan error pada program sehingga eksekusi kode akan masuk pada block catch
+
+lihata contoh di index.js(6)
+
+properti user.name tidak memiliki nilai maka menghasilkan syntax error. di dalamnya kita bisa menampilkan pesan didalamnya yang menjelaskan errornya
+
+JIka terjadi error yang dikarenakan variabel yang belum terdefinisikan 
+lihat index.js(7)
+kita bisa menampilkan pesan error sesuai error yang muncul dengan menggunakan if statement
+
+try {
+    // ...
+} catch (error) {
+    if (error instanceof SyntaxError) {
+        console.log(`JSON Error: ${error.message}`);
+    } else if (error instanceof ReferenceError) {
+        console.log(error.message);
+    } else {
+        console.log(error.stack);
+    }
+}
+
+Dengan operator instanceOf, kita bisa mendapatkan tipe dari eror yang terjadi. Dengan itu  kita bisa membuat percabangan bagaimana cara menangani erornya.
+lihat index.js (8)
+
+Custom Error (Extending an Error)
+
+kita bisa membuat pesan error sendiri 
+dengan contoh kita bisa membuat pesan error dengan menggunakan turunan dari kelas Error yang sudah ada
+
+contoh 
+class ValidationError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = "ValidationError";
+    }
+}
+
+coba lihat index.js(9)
+
+pada kode diatas penggunaan instanceOf akan memberikan hasil eror yang lebih detail dan sesuai dengan eror yang terjadi.
