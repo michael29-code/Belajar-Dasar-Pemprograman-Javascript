@@ -1,0 +1,165 @@
+Concurrency
+
+berarti beberapa komputasi yang terjadi pada saat yang bersamaan.
+
+synchronous dan asynchronous. 
+
+synchronous 
+
+kode dijalankan secara berurutan dari atas ke bawah.
+jika kita menuliskan dua baris kode, maka baris kode kedua tidak bisa dieksekusi sebelum kode baris pertama selesai. 
+
+asynchronous 
+jika kita menuliskan dua baris kode, kita dapat membuat baris kode kedua dieksekusi tanpa harus menunggu kode pada baris pertama selesai dieksekusi. 
+Program asynchronous memungkinkan suatu operasi bisa berjalan sembari menunggu operasi lainnya selesai. 
+--
+Task yang kecil akan lebih dahulu selesai dibandingkan dengan task yang besar, meskipun task yang besar lebih dahulu dijalankan.
+
+
+setTimeout
+
+Fungsi setTimeout() merupakan salah satu contoh untuk menerapkan kode di jalankan secara asynchronous.
+
+lihat index.js (1) coba jalankan
+
+jika menggunakan synchronous makaa program akan memiliki urutan
+Mencetak -> Selamat datang!
+Menunggu selama tiga detik.
+Mencetak -> Terima kasih sudah mampir, silakan datang kembali!
+Mencetak -> Ada yang bisa dibantu?
+
+dengan menggunakan asynchronous 
+Mencetak -> Selamat datang!
+Mencetak -> Ada yang bisa dibantu?
+Menunggu selama tiga detik
+Mencetak -> Terima kasih sudah mampir, silakan datang kembali!
+
+
+Callback Function
+lihat index.js(2
+
+fungsi setTimeout() tidak akan menghentikan JavaScript untuk mengeksekusi kode yang ada selanjutnya.)
+Jadi, fungsi orderCoffee() akan selalu mengembalikan nilai null, karena kode return coffee akan dieksekusi terlebih dulu dibandingkan dengan coffee = "Kopi sudah jadi!";
+Kode asynchronous perlu disusun dengan cara yang berbeda dari synchronous. Cara paling dasar adalah dengan callback function.
+
+dalam contoh coffe shop 
+pelayan  berperan layaknya callback function. Ia diperintahkan pada sebuah fungsi asynchronous kemudian akan dipanggil/digunakan ketika tugas itu selesai.
+
+cara menerapkannya lihat index.js(3)
+
+1.  kita tambahkan parameter dengan nama callback pada fungsi asynchronous.
+2. kita panggil atau gunakan callback yang diisikan dengan data yang akan dibawa (coffee) ketika task selesai dilakukan.
+3. Setelah menggunakan callback, fungsi tidak perlu lagi mengembalikan nilai. Sehingga, kita bisa menghapus kode return coffee;
+
+
+untuk menggunakan fungsi orderCoffee
+
+Callback Hell
+
+kita sudah mengetahui callback dibutuhkan untuk mendapatkan nilai yang berasal dari asynchronous function.lalu bagaimana jika terdapat proses yg bergantung satu sama lain?
+untuk membuat kue kita pasti harus
+Menyiapkan bahan
+Membuat adonan
+Memasukkan adonan ke cetakan
+Memanggang adonan
+
+tahapan tersbut sangat bergantung satu sama lain. contoh penerapan secara synchronous
+lihat index.js (4)
+
+jika fungsi-fungsi tersebut berjalan secara asynchronous, maka kita akan membuat yang namanya callback hell. Callback hell terjadi karena banyak sekali callback function yang bersarang karena saling membutuhkan satu sama lain. 
+lihat index.js (5)
+kode diatas membingungkan dan ribet 
+
+solusi untuk menghindari callback hell adalah salah satunya dengan menggunakan promise 
+
+lihat index.js  (6)
+Dengan Promise, kita dapat meminimalisir callback hell dan mengubahnya menjadi kode yang sangat mudah dibaca.
+
+Promise(es6)
+ciri khas menggunakan fungsi .then
+fitur ini berfungsi untuk membuat janji 
+
+Promise memiliki tiga kondisi, yaitu:
+
+Pending (Janji sedang dalam proses)
+Fulfilled (Janji terpenuhi)
+Rejected (Janji gagal terpenuhi)
+
+Cara membuat Promise
+
+Promise merupakan sebuah objek yang digunakan untuk membuat sebuah komputasi (kode) ditangguhkan dan berjalan secara asynchronous 
+
+Constructing Promise Object
+
+Untuk membuat objek promise, kita gunakan keyword new diikuti dengan constructor dari Promise
+
+const coffee = new Promise();
+
+jika di jalankan kode tersebut akan mengakibatkan eror
+TypeError: Promise resolver undefined is not a function
+
+Di dalam constructor Promise, kita perlu menetapkan resolver function atau bisa disebut executor function. Fungsi tersebut akan dijalankan secara otomatis ketika constructor Promise dipanggil.
+
+lihat index.js(7)
+
+Executor function memiliki dua parameter, yaitu resolve dan reject yang berupa fungsi
+
+resolve() adalah parameter pertama pada executor function. Parameter ini merupakan fungsi yang dapat menerima satu parameter. Biasanya kita gunakan untuk mengirimkan data ketika promise berhasil dilakukan. Ketika fungsi ini terpanggil, kondisi Promise akan berubah dari pending menjadi fulfilled.
+
+reject() adalah parameter kedua pada executor function. Parameter ini merupakan fungsi yang dapat menerima satu parameter dan digunakan untuk memberikan alasan kenapa Promise tidak dapat terpenuhi. Ketika fungsi ini terpanggil, kondisi Promise akan berubah dari pending menjadi rejected.
+
+
+Executor function akan berjalan secara asynchronous hingga akhirnya kondisi Promise berubah dari pending menjadi fulfilled/rejected.
+
+Executor function mengeksekusi resolve() dengan membawa data string “Kopi berhasil dibuat”. Jika kita ubah nilai dari variabel isCoffeeMakerReady menjadi false, maka executor function akan mengeksekusi reject() dengan membawa pesan penolakan “Mesin kopi tidak bisa digunakan”.
+
+Dalam aslinya, Promise digunakan untuk menjalankan proses asynchronous seperti mengambil data dari internet/API. Hasil permintaan data dapat terpenuhi atau mengalami kegagalan.
+
+
+Consuming Promises
+
+status awal dari Promise adalah pending. Kemudian, akan ada dua kemungkinan yang terjadi, fulfilled atau rejected.
+Untuk menangani hasil dari Promise, kita bisa menggunakan method .then().
+
+kira kira seperti 
+const myPromise = new Promise(executorFunction);
+myPromise.then(onFullfilled, onRejected);
+
+.then()  adalah sebuah higher-order function yang membutuhkan dua parameter. 
+
+Keduanya adalah callback function yang seringn disbeut sebagai handler. 
+Handler pertama adalah fungsi yang akan dijalankan ketika Promise berstatus resolve. 
+Handler kedua adalah fungsi yang akan dijalankan ketika Promise berstatus reject.
+
+lihat index.js(9)
+
+1. kita buat object untuk menyimpan stok dan fungsi yang mengembalikan objek Promise.
+2. kita tambahkan dua fungsi untuk menangani masing-masing status resolve dan reject.
+3. panggil method .then() pada checkStock() untuk menangani hasil yang dikembalikan dari promise.
+
+lihat index.js(9)
+1. checkStock() merupakan fungsi yang mengembalikan promise dan akan menghasilkan resolve() dengan membawa nilai “Stok cukup. Bisa membuat kopi”.
+2. fungsi handleSuccess() dan handleFailure() yang mencetak nilai dari parameternya.
+3. Kemudian kita memanggil method .then() dari checkStock. Isi parameter then() dengan dua fungsi handler yang telah kita buat sebelumnya.
+4. Parameter pertama berisi fungsi handleSuccess untuk menangani kondisi ketika promise berstatus resolve. Parameter kedua berisi fungsi handleFailure yang menangani ketika promise berstatus reject.
+
+onRejected with Catch Method
+
+prinsip yang separation of concerns atau pemisahan masalah. 
+
+method .then() akan mengembalikan nilai promise yang sama dengan ketika objek promise itu dipanggil.
+kita dapat memisahkan kedua logika tersebut menggunakan masing-masing method then()
+contoh 
+checkStock()
+  .then(handleSuccess)
+  .then(null, handleFailure);   
+
+untuk menetapkan onRejected handler, kita perlu memberikan nilai null pada parameter pertama method .then()
+
+Hal ini sedikit merepotkan Solusinya kita dapat menggunakan method.catch().
+Method .catch() mirip seperti .then(). Namun, method ini hanya menerima satu parameter function yang digunakan untuk rejected handler. Method catch() ini akan terpanggil ketika objek promise memiliki kondisi onRejected.
+contoh penggunaanya 
+checkStock()
+  .then(handleSuccess)
+  .catch(handleFailure);
+Dengan menggunakan method catch(), kita dapat menerapkan prinsip separation of concerns sekaligus membuat kodenya menjadi lebih rapi.
