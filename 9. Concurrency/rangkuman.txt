@@ -163,3 +163,64 @@ checkStock()
   .then(handleSuccess)
   .catch(handleFailure);
 Dengan menggunakan method catch(), kita dapat menerapkan prinsip separation of concerns sekaligus membuat kodenya menjadi lebih rapi.
+
+
+Chaining Promises
+
+Untuk memastikan rangkaian promise berjalan dengan sesuai, kita perlu mengembalikan (return) promise selanjutnya. 
+
+lihat index.js(10)
+coba analisa
+
+
+Promise All
+
+Ketika pergi ke sebuah kedai kopi bersama rekan kerja, kita biasanya memesan kopi secara bersamaan. Meskipun kopi yang kita pesan berbeda, tak jarang pelayanan mengantarkan pesanan bersamaan. Nah, pada kasus inilah pelayan menggunakan teknik Promise.all().
+
+Method Promise.all() dapat menerima banyak promise dalam bentuk array pada parameternya. Kemudian method tersebut akan mengembalikan nilai seluruh hasil dari promise dalam bentuk array.
+
+contoh kode
+const promises = [firstPromise(), secondPromise(), thirdPromise()];
+ 
+Promise.all(promises)
+    .then(resolvedValue => {
+        console.log(resolvedValue);
+    });
+ 
+/* output
+[ 'first promise', 'second promise', 'third promise' ]
+*/
+
+lihat index.js(11)
+
+
+Async-await
+
+pengambilan nilai dri asynchronous
+lihat index.js(12)
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator
+
+Namun, sejak ES8 (ECMAScript 2017) kita dapat menuliskan asynchronous process layaknya synchronous process dengan bantuan keyword async dan await.
+
+lihat index.js(13)
+
+Keyword async digunakan untuk memberitahu JavaScript supaya menjalankan fungsi makeCoffee() secara asynchronous. Lalu, keyword await digunakan untuk menghentikan proses pembacaan kode selanjutnya sampai fungsi getCoffee() mengembalikan nilai promise resolve.
+
+
+Handle onRejected using async-await
+
+await hanya akan mengembalikan nilai jika promise berhasil dilakukan (onFulfilled).
+Kita dapat menangani sebuah eror atau tolakan dengan menggunakan try...catch. onRejected\
+
+contoh index.jc(13)
+
+Chaining Promise using async-await
+
+melakukan promise berantai bila menggunakan async/await
+
+contoh index.js(14)
+
+untuk menjalankan beberapa promise sekaligus secara bersamaan dengan Promise.all
+
+contoh index.js(15)
