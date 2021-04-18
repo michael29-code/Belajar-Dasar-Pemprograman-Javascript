@@ -1,0 +1,132 @@
+NPM 
+dibuat untuk menambahkan Package/ libary untuk menyelesaikan suatu masalah.
+
+Contohnya ketika aplikasi yang kita buat membutuhkan fitur kalender sementara fitur tersebut tidak didukung secara default oleh JavaScript. Alih-alih membuat fitur kalender dari nol, kita dapat menggunakan package yang telah dibuat oleh developer lain.
+
+npm help 
+list help
+
+npm install -h
+panduan dalam penggunaan perintah install.
+
+-h dapat digunakan tidak hanya pada perintah install, tetapi juga pada seluruh perintah yang ada pada NPM.
+
+npm install
+npm i
+npm in
+npm ins
+npm isntal
+npm add
+ 
+// semua perintah di atas memiliki fungsi yang sama
+
+https://docs.npmjs.com/cli/v7/commands
+
+Command	                    Description	                                                                    Common Options
+init                        Membuat berkas package.json pada project                                        [--force|-f|--yes|-y|--scope]
+install <package-name>      Memasang dan mendaftarkan package pada berkas package.json                      [-P|--save-prod|-D|--save-dev|-O|--save-optional] [-E|--save-exact] [-B|--save-bundle] [--no-save] [--dry-run]
+
+run-script <command>	    Menjalankan perintah yang terdapat pada objek scripts di berkas package.json	[--silent] [-- <args>...]
+uninstall <package-name>    Menghapus dan mengeluarkan package dari berkas package.json	                    [-S|--save|-D|--save-dev|-O|--save-optional|--no-save]
+version                     Untuk melihat versi package yang tersedia secara global atau lokal              [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease [--preid=<prerelease-id>] | from-git]
+
+
+Installing Packages
+
+1. npm init
+
+ada dua jenis instalasi package, yaitu local install dan global install.
+
+Local package akan dipasang di dalam direktori atau folder yang sama dengan project kita. Package ini akan diletakkan di dalam folder node_modules.
+
+Sementara global package dipasang di satu tempat pada sistem perangkat kita (tergantung pengaturan pada saat instalasi node/npm).
+
+
+Untuk menginstal package secara lokal caranya
+npm install <package-name>
+
+Kapan kita menggunakan global package?
+
+Sebuah package harus diinstal secara global hanya saat ia menyediakan perintah yang dapat dieksekusi dari CLI dan digunakan kembali di semua project. 
+Contoh package yang perlu diinstal secara global, antara lain:
+npm
+nodemon
+mocha
+create-react-app
+
+Untuk menginstal package secara global, kita cukup menambahkan parameter -g pada perintah npm install.
+-g berarti global
+
+npm install -g <package-name>
+
+
+Lodash adalah package yang berisi banyak utilitas untuk memudahkan kita dalam menulis kode JavaScript, khususnya yang berhubungan dengan array, object, string, dll.
+
+npm install lodash
+setelah itu setelah instal di package.json
+akan ada 
+"dependencies": {
+  "lodash": "^4.17.21"
+}
+
+terdapat dua tipe object dependencies dalam berkas package.json. Yang pertama object dependencies dan yang kedua object devDependencies
+
+Objek dependencies merupakan objek yang menampung package yang kita gunakan untuk membuat aplikasi. 
+Sedangkan objek devDependencies digunakan untuk package yang berkaitan hanya saat proses pengembangan aplikasi, contohnya seperti package jest yang digunakan untuk testing. 
+Package seperti jest ini hanya digunakan saat proses pengembangan aplikasi. Ia tidak digunakan lagi ketika aplikasi rilis atau digunakan langsung oleh pengguna.
+
+Untuk memasang package sebagai devDependencies, kita bisa menambahkan parameter --save-dev pada perintah npm install.
+
+npm install <package-name> --save-dev
+
+"devDependencies": {
+  "jest": "^26.6.3"
+}
+
+
+Di dalam project akan muncul berkas package-lock.json. Berkas ini secara otomatis dibuat oleh Node untuk menjelaskan susunan project dan package (suatu package bisa saja menggunakan package lainnya).
+
+Berkas package-lock.json juga mendefinisikan versi package yang digunakan dengan lebih spesifik. Apa maksudnya?
+
+ada file package.json kita menentukan versi dengan simbol caret (^). Selain caret, npm juga menggunakan simbol tilde (~). Keduanya digunakan untuk menentukan versi minor dan versi patch yang akan digunakan.
+
+jika kita melihat versi ~1.0.2 itu berarti npm dapat menginstal versi 1.0.2 atau versi patch terbaru seperti 1.0.4. Jika versi package dituliskan dengan caret seperti ^1.0.2, itu berarti npm dapat menginstall versi 1.0.2 atau versi minor terbaru seperti 1.1.0
+
+https://michaelsoolee.com/npm-package-tilde-caret/
+
+File package-lock.json akan mendefinisikan secara spesifik mana versi yang akan digunakan.
+
+
+Using Package
+
+package yang kita tambahkan ke dalam project  adalah module.
+
+Karena merupakan module, kita bisa menambahkan kode dari package menggunakan require()
+
+const variableName = require(‘package-name’);
+
+lihat index.js(1)
+
+untuk menjumlahkan setiap nilai number di dalam array, lakukan dengan cara index.js(2)
+
+https://lodash.com/
+
+
+
+Uninstall Package
+cara untuk menghapus package yang sudah tidak gunakan
+
+Jika package berada pada objek dependencies, kita dapat menghapusnya menggunakan perintah:
+
+npm uninstall <package-name>
+
+Jika package terdapat pada devDependencies, kita bisa menambahkan --save-dev di akhir perintahnya.
+
+npm uninstall lodash
+
+Dengan begitu, package lodash akan dihapus dari objek dependencies pada berkas package.json.
+Selain menghapus nilainya dari package.json, perintah tersebut juga akan menghapus semua berkas yang berhubungan dengan package lodash pada folder node_modules.
+
+alias alias run 
+
+npm uninstall -h 
