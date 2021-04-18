@@ -1,0 +1,142 @@
+JavaScript Testing
+
+Sebelum sebuah program dipublikasikan, sebuah program harus melalui tahap pengujian terlebih dahulu. Proses pengujian tersebut digunakan untuk melakukan kontrol kualitas dari kode yang kita tulis, memastikan bahwa software yang di akan dipublikasikan ke pengguna minim adanya kecacatan atau bugs. Oleh sebab itu, sebagai seorang pemrogram kita harus melakukan testing saat proses pengembangan perangkat lunak.
+
+proses pengujian perangkat lunak dapat dilakukan secara:
+
+Manual
+Proses pengujian secara manual oleh seorang yang ditunjuk sebagai test, atau sebagian pengguna yang memang mendapatkan akses untuk pengujian pra-release. Proses ini biasanya berkaitan dengan usability, accessibility dari sebuah aplikasi.
+
+Otomatis
+Proses pengujian secara otomatis dilakukan oleh komputer dengan menuliskan script khusus, biasanya dilakukan oleh software engineer langsung ataupun oleh seorang QA Engineer. Proses ini biasanya berkaitan dengan fungsionalitas dari sebuah aplikasi.
+
+jenis-jenis pengujian dalam pengembangan perangkat lunak secara umum dapat dibagi menjadi 4 jenis pengujian, yaitu:
+
+Static test
+Memastikan tidak adanya typo (naming convention yang standar) dan memastikan tidak ada error types.
+
+Unit test
+Dilakukan untuk memastikan bahwa setiap unit kode yang kita tulis sudah bisa bekerja sesuai harapan. Unit sendiri berarti komponen terkecil yang dapat diuji secara terisolasi dalam perangkat lunak yang kita buat, dapat berupa fungsi bahkan kelas jika kita menggunakan paradigma OOP. Proses ini juga dapat diautomasikan.
+
+Integration test
+Memastikan beberapa serangkaian fungsi yang saling ketergantungan satu sama lain berjalan semestinya. Proses pengujian ini dapat dilakukan secara diautomasikan dengan menuliskan script test.
+
+End-to-End test
+Proses pengujian sebuah aplikasi untuk menguji flow dari awal hingga akhir, layaknya seorang user saat menggunakan aplikasi. Memastikan bahwasanya aplikasi berfungsi selayaknya. Biasanya proses ini dapat dilakukan secara otomatis maupun manual oleh tester.
+
+
+Ketika kita menulis sebuah kasus pengujian (test case), maka ada beberapa poin yang harus kita definisikan terlebih dahulu:
+
+Apa yang ingin diuji?
+Misalkan: Melakukan uji pada fungsi menghitung rata-rata nilai siswa, atau dapat juga melakukan pengujian pada proses registrasi akun, dan lain sebagainya.
+Ekspektasi apa yang diharapkan?
+Untuk kasus menghitung nilai rata-rata:
+Menghasilkan output perhitungan yang sesuai berdasarkan input yang diberikan.
+Input harus berupa angka.
+Untuk kasus proses registrasi akun:
+Pengguna dapat melakukan registrasi secara normal.
+Pengguna dengan email sama tidak dapat melakukan registrasi.
+dan lain sebagainya.
+
+
+Jest
+
+Jest merupakan salah satu framework testing paling populer untuk menuliskan kode pengujian pada bahasa pemrograman JavaScript. Jest dapat digunakan untuk menuliskan script testing pada aplikasi backend maupun frontend.
+
+mencoba untuk menuliskan sebuah kode pengujian menggunakan framework jest.
+1. Membuat proyek baru dengan direktori bernama latihantesting
+2. Setelah masuk ke direktori tersebut, kita dapat melakukan init project kita
+3. Setelah proyek tersebut diinisialisasi. Selanjutnya kita dapat melakukan instalasi library framework jest
+    npm install --save-dev jest
+4. Setelah proses instalasi selesai, buka proyek di code editor.
+5. Pada file package.json, kita tambahkan script untuk test dengan cara menambahkan baris kode berikut:
+{
+  "scripts": {
+    "test": "jest"
+  }
+}
+
+Penambahan script tersebut digunakan agar kita bisa menjalankan script test yang nanti kita buat menggunakan runner.
+
+Pratice a Test
+
+test(‘deskripsi dari testcase kamu’, () => {
+    expect(perintah).matcher(nilai yang diekspektasikan);
+});
+ 
+// contoh
+test(‘dua tambah dua adalah empat’, () => {
+    expect(2+2).toBe(4);
+});
+
+Dari contoh kode di atas expect(2 + 2) merupakan segmen yang berisi perintah yang menghasilkan nilai balikan, perintah tersebut dapat berupa fungsi ataupun perintah langsung.
+
+toBe(4) disebut dengan matcher, berisi nilai yang diharapkan dari sebuah perintah yang dilakukan sebelumnya. Dalam jest sendiri terdapat berbagai matchers yang dapat digunakan, misalkan:
+
+
+toBe(x)	        bahwa nilai ekspektasi yang diharapkan adalah x
+toEqual(x)	    bahwa nilai ekspektasi yang diharapkan sama dengan x
+toBeNull()	    bahwa nilai ekspektasi yang diharapkan adalah null
+toBeTruthy()	bahwa nilai ekspektasi yang diharapkan adalah truth
+toBeFalsy()	    bahwa nilai ekspektasi yang diharapkan adalah false
+
+
+https://jestjs.io/docs/using-matchers
+
+Pada framework jest, kita juga dapat menuliskan sebuah test secara grouping berdasarkan karakteristik ataupun grup yang sama menggunakan segmen describe , misalkan sebagai berikut:
+
+describe(‘pengujian olah aritmatika’, () => {
+    test(‘#1 dua tambah dua adalah empat’, () => {
+         expect(2+2).toBe(4);
+    });
+  
+    test(‘#2 dua kali tiga adalah enam, () => {
+         expect(2*3).toBe(6);
+    });
+ });
+
+Pengujian Kode 
+
+gradeCalculations.js 
+
+Kode di atas terdapat 2 fungsi:
+
+averageExams : Untuk menghitung rata-rata nilai siswa dari sebuah inputan berupa daftar angka dalam bentuk array.
+isStudentPassExam : Untuk melakukan kalkulasi apakah seorang siswa lulus ujian atau tidak berdasarkan nilai rata-rata yang didapatkan (bergantung pada fungsi averageExams).
+
+kita akan melakukan simulasi pengujian unit test & integration test.
+
+Penulisan kode pengujian dapat dilakukan dengan memulai kerangka testcase yang sudah kita singgung diatas.
+
+Apa yang akan di uji?
+Fungsi menghitung rata-rata.
+Fungsi untuk mengecek apakah seorang siswa lulus ujian.
+Ekspektasi yang diharapkan?
+Menghasilkan nilai yang sesuai dari inputan.
+Inputan harus berupa angka.
+Menghasilkan hasil kelulusan iya/tidak pada siswa dengan nilai kriteria tertentu.
+
+hal yang perlu dilakukan  pada penulisan kode pengujian menggunakan jest adalah sebagai berikut:
+jangan lupa ubah test di package json dgn isi jest
+
+Script test disimpan dalam sebuah folder bernama __tests__.
+1 file test untuk 1 lingkup perintah dengan format namaScopeFunctions.test.js.
+Dari contoh di atas maka semua testcase dari gradeCalculations ditulis di dalam gradeCalculations.test.js.
+
+Untuk menjalankan kode pengujian tersebut, dapat menjalankan perintah runner yang sudah kita buat sebelumnya.
+
+npm run test
+
+Integration test dapat dijalankan ataupun ditulis bersamaan dengan unit test. Sehingga kita dapat melakukan grouping dari contoh kode diatas menjadi sebagai berikut: lihat di latihan testing (2)
+
+Setelah menuliskan semua test case yang ada, dengan jest kita dapat melihat laporan kode yang sudah terdapat pengujian dengan cara sebagai berikut:
+
+npm run test -- --coverage
+Setelah prosesnya selesai, jest akan secara otomatis men-generate laporan pengujian dalam folder coverage. Dalam folder tersebut terdapat:
+
+index.html berisi laporan test secara keseluruhan (1 proyek).
+fungsiDiTest.js.html berisi laporan test per kode pengujian.
+
+
+https://devhints.io/jest
+

@@ -1,0 +1,13 @@
+{
+  "name": "latihantesting",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {},
+  "dependencies": {},
+  "description": ""
+}
